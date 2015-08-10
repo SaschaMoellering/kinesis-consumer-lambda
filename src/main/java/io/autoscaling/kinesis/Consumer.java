@@ -1,4 +1,4 @@
-package com.zanox.kinesis;
+package io.autoscaling.kinesis;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
