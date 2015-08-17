@@ -29,7 +29,7 @@ public class Consumer {
             addressBookBuilder.mergeFrom(data.array());
             AddressBookProtos.AddressBook addressBook = addressBookBuilder.build();
 
-            logger.log(addressBook.toString());
+            logger.log("Read message: \n" + addressBook.toString());
         }
     }
 
