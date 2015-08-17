@@ -7,6 +7,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.events.KinesisEvent;
 import com.amazonaws.services.lambda.runtime.events.KinesisEvent.KinesisEventRecord;
+import io.autoscaling.proto.AddressBookProtos;
 
 /**
  * Created by sascha.moellering on 07/07/2015.
@@ -23,8 +24,12 @@ public class Consumer {
         LambdaLogger logger = context.getLogger();
         for(KinesisEventRecord rec : event.getRecords()) {
             ByteBuffer data = rec.getKinesis().getData();
-            String logEntry = new String(data.array(), "UTF-8");
-            logger.log(logEntry);
+
+            AddressBookProtos.AddressBook.Builder addressBookBuilder = AddressBookProtos.AddressBook.newBuilder();
+            addressBookBuilder.mergeFrom(data.array());
+            AddressBookProtos.AddressBook addressBook = addressBookBuilder.build();
+
+            logger.log(addressBook.toString());
         }
     }
 
